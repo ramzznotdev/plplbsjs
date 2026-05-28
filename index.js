@@ -17,8 +17,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/', orderkuotaRoutes);
+// Routes - PASTIKAN pakai app.use dengan router
+app.use(orderkuotaRoutes);
 
 // Health check
 app.get('/', (req, res) => {
@@ -83,13 +83,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
+// Export untuk Vercel
+module.exports = app;
+
+// Start server lokal
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`RAMZZPAY Relay API running on http://localhost:${PORT}`);
-    console.log(`Docs: http://localhost:${PORT}/docs`);
   });
 }
-
-// Export untuk Vercel
-module.exports = app;
